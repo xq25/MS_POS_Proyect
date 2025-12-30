@@ -37,7 +37,7 @@ class InvoiceModel(Base):
     total_amount = Column(Float, nullable=False)
     taxes = Column(Float, nullable=False)
 
-    issued_at = Column(DateTime, default=datetime.utcnow)
+    date = Column(DateTime, default=datetime.utcnow)
 
     # 🔹 Snapshot de datos del cliente
     client_document = Column(String(30), nullable=False)

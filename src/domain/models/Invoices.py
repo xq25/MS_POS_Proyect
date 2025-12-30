@@ -11,6 +11,7 @@ class Invoice:
         self.invoice_type = invoice_type
         self.client_info = client_info
         self.taxes = sale.taxes
+        self.date = sale.recorded_at
 
 class Invoice_Type:
     ELECTRONIC = "Factura Electronica"
