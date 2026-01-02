@@ -11,7 +11,7 @@ class IngredientModel(Base):
 
     unit = Column(Enum(Units), nullable=False)
 
-    status = Column(Enum(IngredientStatus), default=IngredientStatus.AVAILABLE, nullable=False)
+    status = Column(Enum(IngredientStatus), default=IngredientStatus.NORMAL, nullable=False)
 
     recipes = relationship(
         "RecipeIngredientModel",

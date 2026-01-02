@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from src.domain.models.Orders import Order
 
 class Sale:
@@ -9,9 +10,10 @@ class Sale:
         self.payment_method = payment_method
         self.recorded_at = recorded_at
         self.taxes = order.total_amount * IVA_rate
-class Payment_Method:
+class Payment_Method(Enum):
     CREDIT_CARD = "Tarjeta de Credito"
     DEBIT_CARD = "Tarjeta de Debito"
     CASH = "Efectivo"
     BANK_TRANSFER = "Transferencia Bancaria"
         
+

@@ -1,3 +1,4 @@
+from enum import Enum
 from src.domain.models.Ingredients import Ingredient
 from src.domain.models.Products import Product
 
@@ -8,6 +9,6 @@ class Item_Stock:
         self.stock = stock
         self.min_stock = min_stock  # Minimum stock level, can be used for alerts or reports.
 
-class Item_Type:
+class Item_Type(Enum):
     INGREDIENT = "ingredient"
     PRODUCT = "product"

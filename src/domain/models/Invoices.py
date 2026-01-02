@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Optional
 
 from src.domain.models.Sales import Sale
@@ -13,7 +14,7 @@ class Invoice:
         self.taxes = sale.taxes
         self.date = sale.recorded_at
 
-class Invoice_Type:
+class Invoice_Type(Enum):
     ELECTRONIC = "Factura Electronica"
     PAPER = "Factura Fisica"
 
@@ -25,7 +26,7 @@ class Client_Info:
         self.email = email
         self.doc_type = doc_type
 
-class Document_Type:
+class Document_Type(Enum):
     CEDULA_DE_CIUDADANIA = "CC"
     CEDULA_DE_EXTRANJERIA = "CE"
     PASAPORTE = "PP"

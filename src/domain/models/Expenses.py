@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from typing import Optional
 
 class Expense: 
@@ -8,7 +9,7 @@ class Expense:
         self.type = type
         self.expense_date = expense_date
         self.description = description
-class ExpenseTypes:
+class ExpenseTypes(Enum):
     # RENT = "Renta"
     # UTILITIES = "Utilidades"
     SALARIES = "Salarios"
