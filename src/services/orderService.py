@@ -3,10 +3,8 @@ class OrderService:
 
     def add_product_to_order(order: Order, product:Product_Order):
         code = 'order:001'
-        ''' DEFINIR PRIMERO SI SOLO VAMOS A ACTUALIZAR EL VALOR DE CANTIDAD POR EEL QUE VENGA DENTRO DE PRODUCT_ORDER O SUMARLO A LA CANTIDAD TOTAL
-        Validations 
-            1.product exist?'''
-
+        ''' DEFINIR PRIMERO SI SOLO VAMOS A ACTUALIZAR EL VALOR DE CANTIDAD POR EL QUE VENGA DENTRO DE PRODUCT_ORDER O SUMARLO A LA CANTIDAD TOTAL
+        '''
         for p in order.products:
             if p.product_id == product.product_id:
                 p.quantity += product.quantity
