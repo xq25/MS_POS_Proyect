@@ -53,7 +53,7 @@ class EmployeeRepositorySQLAlchemy:
             salary = employee.salary
         )
         self.db.add(db_employee)
-        return employee
+        return db_employee
 
     def update(self, employee: Employee):
         db_employee = self.db.query(EmployeeModel).get(employee.id)

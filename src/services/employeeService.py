@@ -88,7 +88,7 @@ class EmployeeService:
         db_employee = self.repository.create(employee)
         db_employee.roles.extend(roles)
 
-        return db_employee
+        return employee
 
     def update(self, employeeUpdate: Employee):
         return self.repository.update(employeeUpdate)

@@ -30,3 +30,7 @@ class OrderModel(Base):
         "TableModel",
         back_populates="orders"
     )
+    employee = relationship(
+        "EmployeeModel",
+        back_populates="orders"
+    )

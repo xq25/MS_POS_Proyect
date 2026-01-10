@@ -22,3 +22,7 @@ class EmployeeModel(Base):
         "ShiftModel",
         back_populates="employee"
     )
+    orders = relationship(
+        "OrderModel",
+        back_populates="employee"
+    )
