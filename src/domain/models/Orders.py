@@ -10,11 +10,19 @@ class Product_Order:
         self.price = price # price at the specific time of the order
 
 class Order:
-    def __init__(self, id:Optional[int], employee_id:int, table_id:int, products:list[Product_Order], total_amount:float, start_at: datetime, last_updated: Optional[datetime]=None):
+    def __init__(self, id:Optional[int], employee_id:int, table_id:int, products:list[Product_Order], start_at: datetime, last_updated: Optional[datetime]=None):
         self.id = id
         self.employee_id = employee_id
         self.table_id = table_id
         self.products = products  # List of products with quantity and price at specific time
-        self.total_amount = total_amount
+        self.total_amount = self.calculate_total_amount(products)
         self.start_at = start_at
         self.last_updated = last_updated
+    
+    @staticmethod
+    def calculate_total_amount(products: list[Product_Order]) -> float:
+        '''Calculate the total amount of the order based on products, quantities, and prices'''
+        total = 0.0
+        for p in products:
+            total += p.quantity * p.price
+        return total
