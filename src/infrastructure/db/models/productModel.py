@@ -31,3 +31,7 @@ class ProductModel(Base):
         "OrderProductModel",
         back_populates="product"
     )
+    invoices = relationship(
+        "InvoiceItemModel",
+        back_populates="product"
+    )

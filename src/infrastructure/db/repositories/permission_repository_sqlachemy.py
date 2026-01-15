@@ -34,6 +34,8 @@ class PermissionRepositorySQLAlchemy:
             description = permission.description
         )
         self.db.add(db_permission)
+        self.db.flush()
+        self.db.refresh(db_permission)
         return db_permission
     
     def update(self, permission: Permission):
@@ -43,7 +45,8 @@ class PermissionRepositorySQLAlchemy:
         db_permission.name = permission.name
         db_permission.code = permission.code
         db_permission.description = permission.description
-        self.db.add(db_permission)
+        self.db.flush()
+        self.db.refresh(db_permission)
         return db_permission
     
     def delete(self, permission_id: int):
@@ -51,4 +54,5 @@ class PermissionRepositorySQLAlchemy:
         if not db_permission_deleted:
             return None
         self.db.delete(db_permission_deleted)
+        self.db.flush()
         return db_permission_deleted

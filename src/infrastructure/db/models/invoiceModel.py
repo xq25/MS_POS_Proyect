@@ -28,27 +28,27 @@ class InvoiceModel(Base):
         nullable=False,
         unique=True
     )
-
-    invoice_type = Column(
-        Enum(Invoice_Type),
-        nullable=False
-    )
-
     total_amount = Column(Float, nullable=False)
+
     taxes = Column(Float, nullable=False)
 
-    date = Column(DateTime, default=datetime.utcnow)
+    issued_at = Column(DateTime, default=datetime.utcnow)
 
     # 🔹 Snapshot de datos del cliente
-    client_document = Column(String(30), nullable=False)
-    client_name = Column(String(150), nullable=False)
+    client_document = Column(String(30), nullable=True)
+    client_name = Column(String(150), nullable=True)
     client_email = Column(String(150), nullable=True)
     client_document_type = Column(
         Enum(Document_Type),
-        nullable=False
+        nullable=True
     )
 
     sale = relationship(
         "SaleModel",
         back_populates="invoice"
+    )
+    items = relationship(
+        "InvoiceItemModel",
+        back_populates="invoice",
+        cascade="all, delete-orphan"
     )

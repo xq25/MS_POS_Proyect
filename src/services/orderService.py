@@ -12,6 +12,7 @@ class OrderService:
             products=[
                 Product_Order(
                     product_id=p.product_id,
+                    product_name=p.product_name,
                     quantity=p.quantity,
                     price=p.price
                 ) for p in db_order.products

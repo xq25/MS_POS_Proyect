@@ -45,9 +45,11 @@ class OrderRepositorySQLAlchemy:
             table_id=order.table_id,
             start_at=order.start_at,
             last_updated=order.last_updated,
-            products = [OrderProductModel(product_id=p.product_id, quantity=p.quantity, price = p.price) for p in order.products]
+            products = [OrderProductModel(product_id=p.product_id, product_name=p.product_name, quantity=p.quantity, price = p.price) for p in order.products]
         )
         self.db.add(db_order)
+        self.db.flush()
+        self.db.refresh(db_order)
         return db_order
     
     def update(self, order: Order)-> OrderModel:
@@ -65,13 +67,15 @@ class OrderRepositorySQLAlchemy:
         db_order.products.clear()
         
         for p in order.products:
-            db_order.products.append(OrderProductModel(product_id=p.product_id, quantity=p.quantity, price = p.price))
-
+            db_order.products.append(OrderProductModel(product_id=p.product_id, product_name=p.product_name, quantity=p.quantity, price = p.price))
+        self.db.flush()
+        self.db.refresh(db_order)
         return db_order
-    
+        
     def delete(self, order_id: int):
         db_order = self.db.query(OrderModel).get(order_id)
         if db_order:
             self.db.delete(db_order)
+            self.db.flush()
             return db_order
         return None

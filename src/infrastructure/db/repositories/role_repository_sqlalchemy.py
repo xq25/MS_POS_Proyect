@@ -43,6 +43,8 @@ class RoleRepositorySQLAlchemy:
             description = role.description
         )
         self.db.add(db_role)
+        self.db.flush()
+        self.db.refresh(db_role)
         return db_role
         
     def update(self, role: Role):
@@ -53,6 +55,8 @@ class RoleRepositorySQLAlchemy:
         
         db_role.name = role.name
         db_role.description = role.description
+        self.db.flush()
+        self.db.refresh(db_role)
         return db_role
     
     def delete(self, role_id: int):
@@ -60,6 +64,7 @@ class RoleRepositorySQLAlchemy:
 
         if db_role:
             self.db.delete(db_role)
+            self.db.flush()
             return db_role
         
         return None

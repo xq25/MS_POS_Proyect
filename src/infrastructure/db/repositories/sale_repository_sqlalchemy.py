@@ -48,6 +48,8 @@ class SaleRepositorySQLAlchemy:
             taxes=sale.taxes
         )
         self.db.add(db_sale)
+        self.db.flush()
+        self.db.refresh(db_sale)
         return db_sale
     
     def update(self, sale: Sale):
@@ -59,6 +61,8 @@ class SaleRepositorySQLAlchemy:
         db_sale.recorded_at = sale.recorded_at
         db_sale.total_amount = sale.total_amount
         db_sale.taxes = sale.taxes
+        self.db.flush()
+        self.db.refresh(db_sale)
         return db_sale
     
     def delete(self, sale_id: int):
@@ -66,4 +70,5 @@ class SaleRepositorySQLAlchemy:
         if not db_sale:
             return None
         self.db.delete(db_sale)
+        self.db.flush()
         return db_sale

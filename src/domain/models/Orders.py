@@ -4,8 +4,9 @@ from typing import Optional
 '''this class represent a relationship between products and orders at specific time 
 esta clase es fundamental para mantener el historial de precios y cantidades en el momento de la orden a lo largo del tiempo'''
 class Product_Order: 
-    def __init__(self, product_id: int, quantity: int, price: float):
+    def __init__(self, product_id: int, product_name: str, quantity: int, price: float):
         self.product_id = product_id
+        self.product_name = product_name
         self.quantity = quantity
         self.price = price # price at the specific time of the order
 

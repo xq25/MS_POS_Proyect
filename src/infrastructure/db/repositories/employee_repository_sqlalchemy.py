@@ -53,6 +53,8 @@ class EmployeeRepositorySQLAlchemy:
             salary = employee.salary
         )
         self.db.add(db_employee)
+        self.db.flush()
+        self.db.refresh(db_employee)
         return db_employee
 
     def update(self, employee: Employee):
@@ -63,11 +65,14 @@ class EmployeeRepositorySQLAlchemy:
         db_employee.email = employee.email
         db_employee.phone = employee.phone
         db_employee.salary = employee.salary
+        self.db.flush()
+        self.db.refresh(db_employee)
         return db_employee
 
     def delete(self, employee_id: int):
         db_employee = self.db.query(EmployeeModel).get(employee_id)
         if db_employee:
             self.db.delete(db_employee)
+            self.db.flush()
             return db_employee
         return None
