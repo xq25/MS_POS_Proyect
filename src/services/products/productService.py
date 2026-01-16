@@ -35,86 +35,16 @@ class ProductService:
         created = self.repository.create(db_product)
         return self._model_to_domain(created)
 
-    def update(self, product_id: int, updated_product: Product) -> Optional[Product]:
+    def update(self, updated_product: Product) -> Optional[Product]:
         db_product = self._domain_to_model(updated_product)
-        db_product.id = product_id
+        db_product.id = updated_product.id
         updated = self.repository.update(db_product)
-        return self._model_to_domain(updated) if updated else None
+        if updated:
+            return self._model_to_domain(updated) 
+        raise ValueError(f"El producto con id {updated_product.id} no existe o no fue posible actualizarlo")
 
     def delete(self, product_id: int) -> bool:
         return self.repository.delete(product_id)
-
-    def createProductFromData(self, data: dict) -> Product:
-        category = data.get('category')
-        if category == Category.BEER:
-            return Beer(
-                id=None,
-                name=data['name'],
-                price=data['price'],
-                description=data['description'],
-                category=category,
-                recipe=data.get('recipe'),  # Asumir Recipe o None
-                alcohol_percentage=data['alcohol_percentage'],
-                profile=data['profile'],
-                origin=data['origin'],
-                is_national=data['is_national']
-            )
-        elif category == Category.DRINK:
-            return Drink(
-                id=None,
-                name=data['name'],
-                price=data['price'],
-                description=data['description'],
-                category=category,
-                recipe=data.get('recipe'),
-                is_alcoholic=data['is_alcoholic'],
-                base=data['base'],
-                is_hot=data['is_hot']
-            )
-        elif category == Category.FOOD:
-            return Food(
-                id=None,
-                name=data['name'],
-                price=data['price'],
-                description=data['description'],
-                category=category,
-                recipe=data.get('recipe'),
-                is_vegan=data['is_vegan'],
-                for_sharing=data['for_sharing'],
-                profile=data['profile']
-            )
-        elif category == Category.COCKTAIL:
-            return Cocktail(
-                id=None,
-                name=data['name'],
-                price=data['price'],
-                description=data['description'],
-                category=category,
-                recipe=data.get('recipe'),
-                profile=data['profile'],
-                main_liquor=data['main_liquor']
-            )
-        elif category == Category.SNACK:
-            return Snack(
-                id=None,
-                name=data['name'],
-                price=data['price'],
-                description=data['description'],
-                category=category,
-                recipe=data.get('recipe'),
-                snack_type=data['snack_type'],
-                flavor_profile=data['flavor_profile']
-            )
-        else:
-            # Para Shot o base
-            return Product(
-                id=None,
-                name=data['name'],
-                price=data['price'],
-                description=data['description'],
-                category=category,
-                recipe=data.get('recipe')
-            )
 
     def _model_to_domain(self, db_product: ProductModel) -> Product:
         recipe = self._map_recipe(db_product.recipe) if db_product.recipe else None
@@ -262,14 +192,14 @@ class ProductService:
                 snack_type=product.snack_type,
                 flavor_profile=product.flavor_profile
             )
-        else:
-            return ProductModel(
+        elif isinstance(product, Shot):
+            return ShotModel(
                 name=product.name,
                 price=product.price,
                 description=product.description,
                 category=product.category,
                 recipe_id=recipe_id,
-                type="product"  # O determinar basado en category
+                main_liquor=product.main_liquor
             )
 
     def _map_recipe(self, db_recipe) -> Recipe:

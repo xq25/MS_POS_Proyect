@@ -29,7 +29,6 @@ class PermissionRepositorySQLAlchemy:
     
     def create(self, permission: Permission):
         db_permission = PermissionModel(
-            name = permission.name,
             code = permission.code,
             description = permission.description
         )
@@ -42,7 +41,6 @@ class PermissionRepositorySQLAlchemy:
         db_permission = self.db.query(PermissionModel).get(permission.id)
         if not db_permission:
             return None
-        db_permission.name = permission.name
         db_permission.code = permission.code
         db_permission.description = permission.description
         self.db.flush()

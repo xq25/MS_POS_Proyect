@@ -12,7 +12,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from src.infrastructure.db.base import Base
-from src.domain.models.Invoices import Invoice_Type, Document_Type
+from src.domain.models.Invoices import Document_Type
 
 
 class InvoiceModel(Base):

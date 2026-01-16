@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 from src.infrastructure.db.base import Base
 from src.infrastructure.db.associations.role_permission_table import role_permission_table
+from src.infrastructure.db.associations.employee_role_table import employee_role_table
 
 class RoleModel(Base):
     __tablename__ = "roles"
@@ -16,6 +17,6 @@ class RoleModel(Base):
     )
     employees = relationship(
         "EmployeeModel",
-        secondary="employee_role_table",
+        secondary=employee_role_table,
         back_populates="roles"
     )

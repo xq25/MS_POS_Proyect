@@ -20,6 +20,8 @@ class Category(Enum):
     COCKTAIL = "coctel"
     FOOD = "comida"
     SNACK = "snack"
+    SHOT = "shot"
+    
 #  Bases for drinks
 class DrinkBases(Enum):
     LEMONADE = "limonada"

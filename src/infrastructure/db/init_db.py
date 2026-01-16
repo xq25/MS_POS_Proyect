@@ -9,6 +9,7 @@ from src.infrastructure.db.models import (
     incomeModel,
     ingredientModel,
     invoiceModel,
+    invoiceItemModel,
     itemStockModel,
     orderModel,
     orderProductModel,

@@ -3,7 +3,7 @@ from datetime import datetime
 from src.domain.models.Employees import Employee
 
 class Shift:
-    def __init__(self, id: Optional[int], employee: Employee, start_at: datetime, end_at: Optional[datetime], is_active: bool, shift_payment_id: Optional[int]  = None):
+    def __init__(self, id: Optional[int], employee: 'Employee', start_at: datetime, end_at: Optional[datetime], is_active: bool, shift_payment_id: Optional[int]  = None):
         self.id = id
         self.employee = employee
         self.start_at = start_at # Nuestro turno comienza en esta fecha y hora actual.
@@ -14,7 +14,7 @@ class Shift:
 
 ''' Represents a payment for one or more shifts. '''
 class ShiftPayment:
-    def __init__(self, id: Optional[int], shifts:list[Shift], payment_date: datetime, amount: float):
+    def __init__(self, id: Optional[int], shifts:list['Shift'], payment_date: datetime, amount: float):
         self.id = id
         self.shifts = shifts
         self.amount = amount

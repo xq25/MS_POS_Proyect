@@ -83,7 +83,6 @@ class BeerRepositorySQLAlchemy(ProductRepositorySQLAlchemy):
         db_beer.name = beer.name
         db_beer.price = beer.price
         db_beer.description = beer.description
-        db_beer.category = beer.category
         db_beer.recipe_id = beer.recipe.id if beer.recipe else None
         db_beer.alcohol_percentage = beer.alcohol_percentage
         db_beer.profile = beer.profile

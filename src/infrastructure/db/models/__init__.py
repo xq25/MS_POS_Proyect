@@ -4,6 +4,7 @@ from . import expenseModel
 from . import incomeModel
 from . import ingredientModel
 from . import invoiceModel
+from . import invoiceItemModel
 from . import itemStockModel
 from . import orderModel
 from . import orderProductModel

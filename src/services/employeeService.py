@@ -86,7 +86,6 @@ class EmployeeService:
             raise Exception("No se encontraron roles válidos")
         
         db_employee = self.repository.create(employee)
-        db_employee.roles.extend(roles)
 
         return employee
 

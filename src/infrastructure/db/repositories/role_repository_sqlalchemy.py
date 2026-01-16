@@ -40,7 +40,6 @@ class RoleRepositorySQLAlchemy:
     def create(self, role: Role) -> Role:
         db_role = RoleModel(
             name = role.name,
-            description = role.description
         )
         self.db.add(db_role)
         self.db.flush()
