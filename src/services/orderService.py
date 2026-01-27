@@ -158,15 +158,7 @@ class OrderService:
 
     def create(self, order: Order):
         db_order = self.repository.create(order)
-        return Order(
-            id=db_order.id,
-            employee_id=db_order.employee_id,
-            table_id=db_order.table_id,
-            products=[Product_Order(product_id=p.product_id, quantity=p.quantity, price=p.price) for p in db_order.products],
-            total_amount=db_order.total_amount,
-            start_at=db_order.start_at,
-            last_updated=db_order.last_updated
-        )
+        return self._map_db_order_to_domain(db_order, True)
 
     def update(self, order: Order):
         '''Actualizar orden en la base de datos'''
@@ -174,22 +166,14 @@ class OrderService:
         db_order = self.repository.update(order)
         if not db_order:
             raise ValueError(f'La orden con ID {order.id} no existe')
-        return Order(
-            id=db_order.id,
-            employee_id=db_order.employee_id,
-            table_id=db_order.table_id,
-            products=[Product_Order(product_id=p.product_id, quantity=p.quantity, price=p.price) for p in db_order.products],
-            total_amount=order.total_amount,
-            start_at=db_order.start_at,
-            last_updated=db_order.last_updated
-        )
+        return self._map_db_order_to_domain(db_order, True)
 
     def delete(self, order_id:int):
         '''Eliminar orden de la base de datos'''
         db_orderDeleted = self.repository.delete(order_id)
         if not db_orderDeleted:
             raise ValueError(f'La orden con ID {order_id} no existe')
-        return 
+        return self._map_db_order_to_domain(db_orderDeleted, True)
     
     '''Esta funcion puede incluir la posibilidad de aplicar promociones y descuentos en el futuro, en este punto cumple la misma funcion que la declarada dentro de la clase Order'''
     @staticmethod

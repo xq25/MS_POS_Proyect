@@ -59,12 +59,15 @@ class EmployeeRepositorySQLAlchemy:
 
     def update(self, employee: Employee):
         db_employee = self.db.query(EmployeeModel).get(employee.id)
+
         if not db_employee:
             return None
+        
         db_employee.name = employee.name
         db_employee.email = employee.email
         db_employee.phone = employee.phone
         db_employee.salary = employee.salary
+        
         self.db.flush()
         self.db.refresh(db_employee)
         return db_employee
