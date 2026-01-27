@@ -3,7 +3,6 @@ from src.domain.models.Shifts import Shift
 from src.infrastructure.db.models.shiftModel import ShiftModel
 from src.infrastructure.db.repositories.shifts.shift_repository_sqlalchemy import ShiftRepositorySQLAlchemy
 
-
 class ShiftService:
     def __init__(self, shiftRepo: ShiftRepositorySQLAlchemy):
         self.repository = shiftRepo

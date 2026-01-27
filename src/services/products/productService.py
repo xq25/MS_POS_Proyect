@@ -11,7 +11,7 @@ from src.infrastructure.db.models.Products.foodModel import FoodModel
 from src.infrastructure.db.models.Products.cocktailModel import CocktailModel
 from src.infrastructure.db.models.Products.shotModel import ShotModel
 from src.infrastructure.db.models.Products.snackModel import SnackModel
-from typing import Optional, List, Union
+from typing import Optional, List
 
 class ProductService:
 

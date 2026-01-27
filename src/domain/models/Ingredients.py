@@ -6,6 +6,7 @@ class Ingredient:
         self.id = id
         self.name = name
         self.unit = unit
+        self.status = status
 
 class Units(Enum):
     GRAM = "gr"
