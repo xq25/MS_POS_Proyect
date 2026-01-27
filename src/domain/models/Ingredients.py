@@ -2,11 +2,10 @@ from enum import Enum
 from typing import Optional
 
 class Ingredient:
-    def __init__(self, id: Optional[int], name: str, unit: Units, status:IngredientStatus):
+    def __init__(self, id: Optional[int], name: str, unit: Units):
         self.id = id
         self.name = name
         self.unit = unit
-        self.status = status
 
 class Units(Enum):
     GRAM = "gr"
@@ -18,6 +17,3 @@ class Units(Enum):
     TEASPOON = "Cucharadita"
     PIECE = "Pisca"
 
-class IngredientStatus(Enum):
-    NORMAL = "Normal"
-    STOCK_OUT = "Agotado"

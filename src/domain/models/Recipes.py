@@ -9,7 +9,7 @@ class Recipe:
         self.instructions = instructions
         self.document_link = document_link
 
-class RecipeIngredient:
-    def __init__(self, ingredient: Ingredient, quantity: float):
+class RecipeItemStock:
+    def __init__(self, item: ItemStock, quantity: float):
         self.ingredient = ingredient
         self.quantity = quantity

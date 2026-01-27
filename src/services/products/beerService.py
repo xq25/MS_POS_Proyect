@@ -1,6 +1,8 @@
+from src.infrastructure.db.repositories.products.beer_repository_sqlalchemy import BeerRepositorySQLAlchemy
+
 class BeerService:
-    def __init__(self, beerRepository):
+    def __init__(self, beerRepository: BeerRepositorySQLAlchemy):
         self.repository = beerRepository
 
-    def getAll(self):
-        return self.repository
+    def get_all(self):
+        return self
