@@ -30,12 +30,6 @@ class InvoiceRepositorySQLAlchemy:
             number=invoice.number,
             sale_id=invoice.sale_id,
             total_amount=invoice.total_amount,
-            items = [InvoiceItemModel(
-                product_name=item.product_name,
-                unit_price=item.unit_price,
-                quantity=item.quantity,
-                total_price=item.total_price
-            ) for item in invoice.items],
             taxes=invoice.taxes,
             issued_at=invoice.issued_at,
             client_document=invoice.client_info.id if invoice.client_info else None,
@@ -44,6 +38,21 @@ class InvoiceRepositorySQLAlchemy:
             client_document_type=invoice.client_info.doc_type if invoice.client_info else None
         )
         self.db.add(db_invoice)
+        self.db.flush()
+        
+        # Agregar items a la factura
+        for item in invoice.items:
+            db_item = InvoiceItemModel(
+                invoice_id=db_invoice.id,
+                product_name=item.product_name,
+                unit_price=item.unit_price,
+                quantity=item.quantity,
+                total_price=item.total_price
+            )
+            self.db.add(db_item)
+        
+        self.db.flush()
+        self.db.refresh(db_invoice)
         return db_invoice
 
     def update_invoice(self, invoice: Invoice)-> InvoiceModel:
@@ -52,22 +61,31 @@ class InvoiceRepositorySQLAlchemy:
         if not db_invoice:
             return None
         
+        # Datos Obligatorios
         db_invoice.total_amount = invoice.total_amount
         db_invoice.issued_at = invoice.issued_at
+
+        # Datos Opcionales Ligados Al Tipo De Facturacion
         db_invoice.client_document = invoice.client_info.id if invoice.client_info else None
         db_invoice.client_name = invoice.client_info.name if invoice.client_info else None
         db_invoice.client_email = invoice.client_info.email if invoice.client_info else None
         db_invoice.client_document_type = invoice.client_info.doc_type if invoice.client_info else None
-        # Update items
-        db_invoice.items.clear()
+        
+        # Actualizar items
+            # Eliminar items antiguos
+        self.db.query(InvoiceItemModel).filter(InvoiceItemModel.invoice_id == db_invoice.id).delete()
+        
+        # Agregar nuevos items
         for item in invoice.items:
             db_item = InvoiceItemModel(
+                invoice_id=db_invoice.id,
                 product_name=item.product_name,
                 unit_price=item.unit_price,
                 quantity=item.quantity,
                 total_price=item.total_price
             )
-            db_invoice.items.append(db_item)
+            self.db.add(db_item)
+        
         self.db.flush()
         self.db.refresh(db_invoice)
         return db_invoice
@@ -78,7 +96,6 @@ class InvoiceRepositorySQLAlchemy:
         if not db_invoice:
             return None
         self.db.delete(db_invoice)
-        self.db.refresh(db_invoice)
         self.db.flush()
 
         return db_invoice

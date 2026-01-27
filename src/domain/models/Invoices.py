@@ -2,8 +2,6 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
-from src.domain.models.Sales import Sale
-
 class Invoice:
     def __init__(self, id: Optional[int], number: str, sale_id:int, total_amount: float, items: list[InvoiceItem], client_info: Client_Info | None, taxes: float, issued_at:datetime):
         self.id = id
@@ -29,8 +27,6 @@ class InvoiceItem:
         self.unit_price = unit_price
         self.quantity = quantity
         self.total_price = total_price
-
-
 
 '''this class represent client information with different document types cause is necessary to digital invoicing'''
 class Client_Info:

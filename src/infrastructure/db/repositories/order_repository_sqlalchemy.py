@@ -44,12 +44,27 @@ class OrderRepositorySQLAlchemy:
             total_amount=order.total_amount,
             table_id=order.table_id,
             start_at=order.start_at,
-            last_updated=order.last_updated,
-            products = [OrderProductModel(product_id=p.product_id, product_name=p.product_name, quantity=p.quantity, price = p.price) for p in order.products]
+            last_updated=order.last_updated
         )
         self.db.add(db_order)
         self.db.flush()
         self.db.refresh(db_order)
+        
+        # Agregar productos existentes si existen
+        
+        for p in order.products:
+            order_product = OrderProductModel(
+                order_id=db_order.id,
+                product_id=p.product_id,
+                product_name=p.product_name,
+                quantity=p.quantity,
+                price=p.price
+            )
+            self.db.add(order_product)
+            
+        self.db.flush()
+        self.db.refresh(db_order)
+        
         return db_order
     
     def update(self, order: Order)-> OrderModel:
@@ -64,10 +79,21 @@ class OrderRepositorySQLAlchemy:
         db_order.start_at = order.start_at
         db_order.last_updated = order.last_updated
 
-        db_order.products.clear()
+        # Actualizar productos existentes
+            # Limpiar productos antiguos
+        self.db.query(OrderProductModel).filter(OrderProductModel.order_id == db_order.id).delete()
         
+        # Agregar nuevos productos
         for p in order.products:
-            db_order.products.append(OrderProductModel(product_id=p.product_id, product_name=p.product_name, quantity=p.quantity, price = p.price))
+            order_product = OrderProductModel(
+                order_id=db_order.id,
+                product_id=p.product_id,
+                product_name=p.product_name,
+                quantity=p.quantity,
+                price=p.price
+            )
+            self.db.add(order_product)
+        
         self.db.flush()
         self.db.refresh(db_order)
         return db_order

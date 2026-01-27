@@ -18,13 +18,14 @@ class ShiftModel(Base):
 
     start_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     end_at = Column(DateTime, nullable=True)
+    total_hours = Column(float, nullable=True)
 
     is_active = Column(Boolean, default=True, nullable=False)
 
     # FOREIGN KEY that references the shift payment
     shift_payment_id = Column(
         Integer,
-        ForeignKey("shift_payments.id"),
+        ForeignKey("shift_payments.id", ondelete="SET NULL"),
         nullable=True   # because it may not be paid yet
     )
 

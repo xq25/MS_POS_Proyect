@@ -103,5 +103,5 @@ class FoodRepositorySQLAlchemy(ProductRepositorySQLAlchemy):
         if db_food:
             self.db.delete(db_food)
             self.db.flush()
-            return True
-        return False
+            return db_food
+        return None

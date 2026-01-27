@@ -99,5 +99,5 @@ class BeerRepositorySQLAlchemy(ProductRepositorySQLAlchemy):
         if db_beer:
             self.db.delete(db_beer)
             self.db.flush()
-            return True
-        return False
+            return db_beer
+        return None

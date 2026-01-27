@@ -1,5 +1,4 @@
 from typing import Optional
-
 from src.domain.models.Ingredients import Ingredient
 
 class Recipe:

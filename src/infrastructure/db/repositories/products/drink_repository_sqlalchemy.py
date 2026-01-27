@@ -103,5 +103,5 @@ class DrinkRepositorySQLAlchemy(ProductRepositorySQLAlchemy):
         if db_drink:
             self.db.delete(db_drink)
             self.db.flush()
-            return True
-        return False
+            return db_drink
+        return None

@@ -105,5 +105,5 @@ class ShotRepositorySQLAlchemy(ProductRepositorySQLAlchemy):
         if db_shot:
             self.db.delete(db_shot)
             self.db.flush()
-            return True
-        return False
+            return db_shot
+        return None

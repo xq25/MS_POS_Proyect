@@ -120,5 +120,5 @@ class SnackRepositorySQLAlchemy(ProductRepositorySQLAlchemy):
         if db_snack:
             self.db.delete(db_snack)
             self.db.flush()
-            return True
-        return False
+            return db_snack
+        return None

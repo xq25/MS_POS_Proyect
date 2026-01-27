@@ -15,7 +15,7 @@ class ShiftPaymentModel(Base):
         default=datetime.utcnow
     )
 
-    amount = Column(Float, nullable=False)
+    total_amount = Column(Float, nullable=False)
 
     # Relaciones
     shifts = relationship(
